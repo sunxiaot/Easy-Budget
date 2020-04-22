@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Easy Budget</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/viewport.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+<div id="app" class="analysis">
+    <mt-header title="Easy Budget">
+    </mt-header>
+
+    <div class="contanier">
+        <mt-navbar v-model="selected">
+            <mt-tab-item id="1">Report</mt-tab-item>
+            <mt-tab-item id="2">Trend</mt-tab-item>
+        </mt-navbar>
+
+        <!-- tab-container -->
+        <mt-tab-container v-model="selected">
+            <mt-tab-container-item id="1">
+                <div class="top">
+                    <div id="pieChart" ref="pieChart" style="width: 200px;height:200px;"></div>
+                </div>
+                <div class="bottom">
+                    <div v-for="(item,index) in list">
+                        <mt-cell :title="item.title" @click.native="boxListShow(index)" label="38.0%" >
+                            <span>{{item.money}}</span>
+                            <img slot="icon" src="../img/money.png" width="24" height="24">
+                        </mt-cell>
+                        <div class="boxList" v-if="index == num">
+                            <ul>
+                                <li v-for="n in item.categoty"><span>{{n.date}}</span><span>{{n.text}}</span><span>{{n.money}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </mt-tab-container-item>
+            <mt-tab-container-item id="2">
+                <div class="top">
+                    <div id="lineChart" ref="lineChart" style="width: 200px;height:200px;"></div>
+                </div>
+                <div class="bottom">
+                    <mt-cell title="NOV" value="$110"></mt-cell>
+                    <mt-cell title="OCT" value="$120"></mt-cell>
+                    <mt-cell title="SEP" value="$300"></mt-cell>
+                    <mt-cell title="AUG" value="$200"></mt-cell>
+                    <mt-cell title="JUL" value="$430"></mt-cell>
+                    <mt-cell title="JUN" value="$110"></mt-cell>
+                    <mt-cell title="MAY" value="$220"></mt-cell>
+                </div>
+            </mt-tab-container-item>
+        </mt-tab-container>
+
+
+
+        <!-- Tab bar -->
+        <mt-tabbar v-model="tabbar">
+            <mt-tab-item id="tab1">
+                <a href="../index.html">
+                <img slot="icon" src="../img/expenses.png" width="22px"><br>
+                Expenses
+                </a>
+            </mt-tab-item>
+            <mt-tab-item id="tab2">
+                <img slot="icon" src="../img/analysis-select.png" width="22px">
+                Analysis
+            </mt-tab-item>
+            <mt-tab-item id="typein">
+                <a href="../page/typeIn.html">
+                <img slot="icon" src="../img/add.svg">
+                </a>
+            </mt-tab-item>
+            <mt-tab-item id="tab3">
+                <a href="../page/myplant.html">
+                <img slot="icon" src="../img/myplant.png" width="21px"><br>
+                My Plant
+                </a>
+            </mt-tab-item>
+            <mt-tab-item id="tab4">
+                <a href="../page/my.html">
+                <img slot="icon" src="../img/me.png" width="22px"><br>
+                Me
+                </a>
+            </mt-tab-item>
+        </mt-tabbar>
+
+
+</body>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@4.1.0/dist/echarts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-echarts@4.0.2"></script>
+<script>
+
+    new Vue({
+        el: '#app',
+        data:{
+            boxList1:false,
+            boxList2:false,
+            boxList3:false,
+            selected:'1',
+            tabbar:'tab2',
+            expensesList:[],
+            incomeList:[],
+            num:-1,
+            dataList:[
+                {
+                    value:800,
+                    name:'Meal'
+                },
+                {
+                    value:1200,
+                    name:'Cloth'
+                },
+                {
+                    value:1500,
+                    name:'Game'
+                }
+            ],
+            list:[
+                {
+                    title:'Meal',
+                    money:800,
+                    categoty:[
+                        {
+                            date:'Nov 15',
+                            text:'Dinner',
+                            money:1000
+                        },
+                        {
+                            date:'Nov 05',
+                            text:'Dinner',
+                            money:100
+                        },
+                        {
+                            date:'Nov 01',
+                            text:'Dinner',
+                            money:100
+                        }
+                    ]
+                },
+                {
+                    title:'Cloth',
+                    money:1200,
+                    categoty:[
+                        {
+                            date:'Nov 11',
+                            text:'T-shirt',
+                            money:500
+                        },
+                        {
+                            date:'Nov 05',
+                            text:'short',
+                            money:700
+                        }
+                    ]
+                },
+                {
+                    title:'Game',
+                    money:1500,
+                    categoty:[
+                        {
+                            date:'Nov 10',
+                            text:'XXX',
+                            money:400
+                        },
+                        {
+                            date:'Nov 02',
+                            text:'XXX',
+                            money:100
+                        }
+                    ]
+                }
+            ]
+        },
+        mounted(){
+            this.pieChart();
+            this.lineChart();
+            this.expensesList = JSON.parse(localStorage.getItem('expensesList'))?JSON.parse(localStorage.getItem('expensesList')):this.expensesList;
+            this.incomeList = JSON.parse(localStorage.getItem('incomeList'))?JSON.parse(localStorage.getItem('incomeList')):this.incomeList;
+            console.log(this.expensesList,'this.expensesList');
+            console.log(this.incomeList,'this.incomeList');
+            if(this.expensesList){
+                var total = 0;
+                this.expensesList.forEach(e=>{
+                        total = Number(total + e.money);
+                        this.list.push({title:e.text,money:e.money,categoty:[{date:e.date,text:e.text,money:e.money}]});
+                        this.dataList.push({
+                            value:e.money,
+                            name:e.text
+                        })
+                })
+            }
+            if(this.incomeList){
+                var total = 0;
+                this.incomeList.forEach(e=>{
+                    total = Number(total + e.money);
+                    this.list.push({title:e.text,money:e.money,categoty:[{date:e.date,text:e.text,money:e.money}]});
+                    this.dataList.push({
+                        value:e.money,
+                        name:e.text
+                    })
+                })
+            }
+            console.log(this.dataList,'this.dataList')
+            // this.newList = JSON.parse(localStorage.getItem('newList'))?JSON.parse(localStorage.getItem('newList')):this.newList;
+        },
+        methods: {
+            boxListShow(index){
+                this.num = index;
+            },
+            boxListShow1(){
+                this.boxList1 = !this.boxList1;
+            },
+            boxListShow2(){
+                this.boxList2 = !this.boxList2;
+            },
+            boxListShow3(){
+                this.boxList3 = !this.boxList3;
+            },
+            handleClose(){
+                window.location.href = '../index.html';
+            },
+            pieChart(){
+                let myChart = echarts.init(this.$refs.pieChart);
+                myChart.setOption({
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                    },
+                    legend: {
+                        type: 'plain',
+                        orient: 'horizontal',
+
+                        bottom: 20,
+                        width:300,
+                        // data: ['Noc.Income $120.00', 'Noc.Balance $1300.00']
+                    },
+                    color:['#FB9D9B', '#C3B5ED','#FBD778','#196ead','#96d1fd','#bde3ff','#b9b9b9','#c9e8ff','#828282'],
+                    series: [
+                        {
+                            name: '',
+                            type: 'pie',
+                            radius: ['32%', '48%','20%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                            data: this.dataList
+                        }
+                    ]
+                });
+
+            },
+            lineChart(){
+                let myChart = echarts.init(this.$refs.lineChart);
+                myChart.setOption({
+                    title: {
+                        text: ''
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        // data: []
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        // feature: {
+                        //     saveAsImage: {}
+                        // }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name: 'Meal',
+                            type: 'line',
+                            stack: '',
+                            data: [120, 132, 101, 134, 90, 230, 210]
+                        },
+                        {
+                            name: 'Cloth',
+                            type: 'line',
+                            stack: '',
+                            data: [220, 182, 191, 234, 290, 330, 310]
+                        },
+                        {
+                            name: 'Game',
+                            type: 'line',
+                            stack: '',
+                            data: [150, 232, 201, 154, 190, 330, 410]}
+
+                    ]
+                });
+
+            },
+        }
+    })
+</script>
+
+
+</html>

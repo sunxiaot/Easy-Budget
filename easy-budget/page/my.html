@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Easy Budget</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1743147_2a5hlhi3en4.css">
+    <script src="../js/viewport.js"></script>
+    <style>
+        @font-face {
+            font-family: 'miniui' !important;
+            src: url('../css/font/iconfont.eot');
+            src: url('../css/font/iconfont.eot?#iefix') format('embedded-opentype'),
+            url('../css/font/iconfont.woff2') format('woff2'),
+            url('../css/font/iconfont.woff') format('woff'),
+            url('../css/font/iconfont.ttf') format('truetype'),
+            url('../css/font/iconfont.svg#iconfont') format('svg');
+            font-style: normal;
+        }
+
+        
+
+    </style>
+</head>
+
+<body>
+    <div id="app" class="my">
+        <mt-header title="Easy Budget">
+        </mt-header>
+
+        <div class="contanier">
+            <mt-cell title="Xiaotong Sun" is-link >
+                <img slot="icon" src="../img/avatar.png" width="24" height="24">
+            </mt-cell>
+            <mt-cell title="My Wallet" to="wallet.html" is-link >
+                <img slot="icon" src="../img/wallet.svg" width="24" height="24">
+            </mt-cell>
+            <mt-cell title="Budget Setting" to="budget.html" is-link >
+                <img slot="icon" src="../img/budget.svg" width="24" height="24">
+            </mt-cell>
+            <mt-cell title="Reminders" to="reminders.html" is-link >
+                <img slot="icon" src="../img/reminder.svg" width="24" height="24">
+            </mt-cell>
+            <mt-cell title="Passcode" is-link >
+                <img slot="icon" src="../img/passcode.svg" width="24" height="24">
+            </mt-cell>
+            <mt-cell title="Gneral" is-link >
+                <img slot="icon" src="../img/general.svg" width="24" height="24">
+            </mt-cell>
+            <mt-cell title="Help" is-link >
+                <img slot="icon" src="../img/help.svg" width="24" height="24">
+            </mt-cell>
+        </div>
+
+       <!-- Tab bar -->
+       <mt-tabbar v-model="tabbar">
+        <mt-tab-item id="tab1">
+            <a href="../index.html">
+            <img slot="icon" src="../img/expenses.png" width="22px"><br>
+            Expenses
+            </a>
+        </mt-tab-item>
+        <mt-tab-item id="tab2">
+            <a href="../page/analysis.html">
+            <img slot="icon" src="../img/analysis.png" width="22px"><br>
+            Analysis
+            </a>
+        </mt-tab-item>
+        <mt-tab-item id="typein">
+            <a href="../page/typeIn.html">
+            <img slot="icon" src="../img/add.svg">
+            </a>
+        </mt-tab-item>
+        <mt-tab-item id="tab3">
+            <a href="../page/myplant.html">
+            <img slot="icon" src="../img/myplant.png" width="21px"><br>
+            My Plant
+            </a>
+        </mt-tab-item>
+        <mt-tab-item id="tab4">
+            <img slot="icon" src="../img/me-select.png" width="22px">
+            Me
+        </mt-tab-item>
+    </mt-tabbar>
+
+    </div>
+
+</body>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data:{
+          selected:'1',
+          tabbar:'tab4'
+      },
+      methods: {
+          handleClose(){
+              window.location.href = '../index.html';
+          },
+      }
+    })
+  </script>
+
+
+</html>

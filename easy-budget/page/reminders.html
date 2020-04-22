@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Easy Budget</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1743147_2a5hlhi3en4.css">
+    <script src="../js/viewport.js"></script>
+    <style>
+        @font-face {
+            font-family: 'miniui' !important;
+            src: url('../css/font/iconfont.eot');
+            src: url('../css/font/iconfont.eot?#iefix') format('embedded-opentype'),
+            url('../css/font/iconfont.woff2') format('woff2'),
+            url('../css/font/iconfont.woff') format('woff'),
+            url('../css/font/iconfont.ttf') format('truetype'),
+            url('../css/font/iconfont.svg#iconfont') format('svg');
+            font-style: normal;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div id="app" class="my">
+        <mt-header title="Reminders">
+            <router-link to="my.html" slot="left">
+                <mt-button @click="handleClose" icon="back"></mt-button>
+            </router-link>
+        </mt-header>
+
+        <div class="contanier">
+            <mt-cell title="Credit Card Payment" is-link value="Tomorrow"></mt-cell>
+            <mt-cell title="Rent" is-link value="Setting"></mt-cell>
+            <mt-cell title="Add Upcoming Bill" is-link to="details.html">
+                <img slot="icon" src="../img/add-acount.svg" width="20" height="20">
+            </mt-cell>
+        </div>
+
+    </div>
+
+</body>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data:{
+          selected:'1',
+      },
+      methods: {
+          handleClose(){
+              window.location.href = 'my.html';
+          },
+      }
+    })
+  </script>
+
+
+</html>

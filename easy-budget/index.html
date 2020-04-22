@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Easy Budget</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/viewport.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app" class="home">
+        <mt-header fixed title="Easy Budget"></mt-header>
+
+        <div class="top">
+            <div id="myChart" ref="myEchart" style="width:400px; height:150px;"></div>
+        </div>
+        <div class="bottom">
+            <div class="track-rcol">
+                <div class="track-list">
+                    <ul>
+                        <li v-for="item in dateList">
+                            <i class="node-icon"><img v-if="item.date" width="10px" height="10px" src="img/dot.png" alt=""></i>
+                            <span style="color: #999;"  v-if="item.date" class="date">{{item.date}}</span> 
+                            <span v-if="item.money" class="time money">-{{item.money}}</span>
+                            <span v-if="item.text" class="txt">{{item.text}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Tab bar -->
+        <mt-tabbar v-model="tabbar">
+            <mt-tab-item id="tab1">
+                <img slot="icon" src="img/expenses-select.png" width="22px">
+                Expenses
+            </mt-tab-item>
+            <mt-tab-item id="tab2">
+                <a href="page/analysis.html">
+                <img slot="icon" src="img/analysis.png" width="22px"><br>
+                Analysis
+                </a>
+            </mt-tab-item>
+            <mt-tab-item id="typein">
+                <a href="page/typeIn.html">
+                <img slot="icon" src="img/add.svg">
+                </a>
+            </mt-tab-item>
+            <mt-tab-item id="tab3">
+                <a href="page/myplant.html">
+                <img slot="icon" src="img/myplant.png" width="21px"><br>
+                My Plant
+                </a>
+            </mt-tab-item>
+            <mt-tab-item id="tab4">
+                <a href="page/my.html">
+                <img slot="icon" src="img/me.png" width="22px"><br>
+                Me
+                </a>
+            </mt-tab-item>
+        </mt-tabbar>
+
+
+    </div>
+
+</body>
+
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.1.0/dist/echarts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-echarts@4.0.2"></script>
+    <script>
+
+   
+    // Data get
+    new Vue({
+      el: '#app',
+        data:{
+            tabbar:'tab1',
+            dateList:[],
+            newexpensesList:{},
+            newincomeList:{},
+            newList:{}
+        },
+        mounted(){
+          this.drawLine();
+          this.newList = JSON.parse(localStorage.getItem('newList'))?JSON.parse(localStorage.getItem('newList')):this.newList;
+          this.newexpensesList = JSON.parse(localStorage.getItem('newexpensesList'))?JSON.parse(localStorage.getItem('newexpensesList')):this.newexpensesList;
+          this.newincomeList = JSON.parse(localStorage.getItem('newincomeList'))?JSON.parse(localStorage.getItem('newincomeList')):this.newincomeList;
+          this.expensesList = JSON.parse(localStorage.getItem('expensesList'))?JSON.parse(localStorage.getItem('expensesList')):this.expensesList;
+          this.incomeList = JSON.parse(localStorage.getItem('incomeList'))?JSON.parse(localStorage.getItem('incomeList')):this.incomeList;
+            var list = null;
+            for(var i = 0;i<this.newList.length;i++){
+                this.dateList.unshift(this.newList[i]);
+            }
+
+          console.log(this.dateList,'this.dateList')
+        },
+
+      // Using ECharts to make a donut chart
+      methods: {
+          drawLine(){
+              let myChart = echarts.init(this.$refs.myEchart);
+              myChart.setOption({
+                  tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                  },
+                  legend: {
+                        type: 'plain',
+                        orient: 'vertical',
+                        itemWidth:10,  
+                        itemHeight:10, 
+                        x : 'left',   
+                        y: 'center', 
+                        data: ['Monthly Expense', 'Monthly Balance']
+                  },
+                  color:['#FF7676', '#DDDDDD'],
+                  series: [
+                      {
+                          name: '',
+                          type: 'pie',
+                          radius: ['50%', '70%'],
+                          avoidLabelOverlap: false,
+                          label: {
+                              show: false,
+                              position: 'center'
+                          },
+                          emphasis: {
+                              label: {
+                                  show: false,
+                              }
+                          },
+                          labelLine: {
+                              show: false
+                          },
+                          data: [
+                              {value: 500, name: 'Monthly Expense'},
+                              {value: 1300, name: 'Monthly Balance'}
+                          ]
+                      }
+                      
+                  ]
+              });
+
+          }
+      }
+    })
+  </script>
+
+
+</html>

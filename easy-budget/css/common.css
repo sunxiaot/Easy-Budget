@@ -1,0 +1,559 @@
+html,body,#app{
+    width: 100%;
+    height: 100%;
+}
+
+.mint-header {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    background-color: #FF7676;
+    box-sizing: border-box;
+    color: #fff;
+    font-family: Helvetica;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 14px;
+    height: 40px;
+    line-height: 1;
+    padding: 0 10px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.container{
+    z-index: 1;
+}
+
+.opt{
+    position: relative;
+    overflow: hidden;
+}
+
+.mint-tabbar{
+    position: fixed !important;
+}
+
+.pd{
+    padding:0.34rem 0.36rem;
+}
+
+.pt50{
+    padding-top: 0.5rem;
+}
+
+.mb20{
+    margin-bottom: 0.2rem;
+}
+
+.mb32{
+    margin-bottom: 0.32rem;
+}
+
+.mb48{
+    margin-bottom: 0.48rem;
+}
+
+.left{
+    float:left;
+    overflow: hidden;
+}
+
+.right{
+    float: right;
+}
+
+
+ul,li,ol{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+body{
+    margin: 0!important;
+}
+@font-face {
+    font-family: 'iconfont';
+    src: url('font/iconfont.eot');
+    src: url('font/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('font/iconfont.woff2') format('woff2'),
+    url('font/iconfont.woff') format('woff'),
+    url('font/iconfont.ttf') format('truetype'),
+    url('font/iconfont.svg#iconfont') format('svg');
+}
+
+
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.mint-tabbar > .mint-tab-item.is-selected {
+    color: #FF7676;
+}
+
+.mint-tab-item-label a{
+    color:#8C8C8C;
+    line-height: 15px;
+}
+
+/*home*/
+.home #myChart{
+    display: block;
+    margin: 0 auto; 
+    margin-top: 40px;
+}
+
+.home .top{
+    background: #ffffff;
+    margin-top: 40px;
+    box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 25px 25px;
+}
+
+ul li {
+    list-style: none;
+}
+
+body {
+    font-size: 12px;
+    font-family: Helvetica;
+}
+
+.track-rcol {
+    width: 100%;
+    border: 1px solid #eee;
+}
+
+.track-list {
+    margin: 20px;
+    padding-left: 5px;
+    position: relative;
+    margin-left: 47%
+}
+
+.track-list li {
+    position: relative;
+    padding: 9px 0 0 25px;
+    line-height: 18px;
+    border-left: 1px solid #d9d9d9;
+    color: #585858;
+}
+
+.track-list li .node-icon {
+    position: absolute;
+    left: -5px;
+    top: 50%;
+}
+
+.track-list li .money {
+    position: relative;
+    top: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    left: -60px;
+} 
+
+.track-list li .date {
+    position: relative;
+    top: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    left: -100px;
+}
+
+.track-list li .txt {
+    margin-right: 100px;
+    position: relative;
+    top: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 600px;
+}
+
+/*.typeIn*/
+.mint-navbar .mint-tab-item {
+    color: #8C8C8C;
+}
+
+.mint-navbar .mint-tab-item.is-selected {
+    border-bottom: 3px solid #FF7676;
+    color: #FF7676;
+    margin-bottom: -3px;
+}
+
+.typeIn .selectBox{
+    padding:0 10px;
+}
+
+.typeIn .selectBox ul li{
+    float: left;
+    margin-right: 0.2rem;
+    font-size: 0.2rem;
+    text-align: center;
+}
+
+.typeIn .selectBox span{
+    display: block;
+    background: #ccc;
+    width: 1.2rem;
+    height:1.2rem;
+    border-radius: 100%;
+}
+
+.typeIn .selectBox span i{
+    font-size: 30px;
+    color:#fff;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2rem;
+} 
+
+.typeIn  .mint-tab-container{
+    margin-top: 5px;
+}
+
+
+.typeIn .selectBox ul li:last-of-type span{
+    background:#FF7676;
+}
+
+.typeIn .deleteC{
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    font-size: 8px;
+}
+
+.typeIn .selectBox ul li:nth-of-type(5n){
+    margin-right: 0;
+}
+
+.typeIn .expensesNnum{
+    width: 40%;float: right;text-align: right;
+}
+
+.typeIn .expensesNnum .mint-field-core{
+    text-align: right;
+}
+
+.typeIn .expensesName{
+    width: 90%;
+}
+
+.typeIn .expensesName{
+    width: 90%;
+}
+
+/*myPlant*/
+.myPlant .mt-progress div{
+    font-size: 0.3rem;
+}
+.myPlant .mt-progress{
+    padding:0 20px;
+    color: #585858;
+}
+
+.mt-progress-progress {
+    position: absolute;
+    display: block;
+    background-color: #8DD5D9;
+}
+
+.myPlant  .mt-progress-content{
+    margin: 0 20px;
+}
+
+.myPlant .container .expenseBox{
+    position: fixed;
+    top: 20%;
+    left:30%;
+}
+
+.myPlant .container .incomeBox{
+    position: fixed;
+    top: 30%;
+    right:30%;
+}
+
+.myPlant .container .water{
+    width: 50px;
+    height: 60px;
+    background: url("../img/water.svg") no-repeat;
+    background-size: cover;
+}
+
+.myPlant .container .water span{
+    font-size: 0.3rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    line-height: 70px;
+    display: block;
+}
+.myPlant .container .bottom{
+    width: 100%;
+    height: 152px;
+    background-image: url("../img/desk.svg");
+    background-repeat: repeat-x;
+    position: fixed;
+    bottom: 86px;
+}
+
+.myPlant .container .bottom img{
+    position: fixed;
+    bottom: 238px;
+    left: 30%;
+}
+
+.myPlant .box{
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+
+.myPlant .bgBox{
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.6;
+}
+
+.myPlant .winBox{
+    top: 15%;
+    left: 5%;
+    right: 5%;
+    width: 90%;
+    height: 70%;
+    position: fixed;
+    text-align: center;
+}
+
+.myPlant .winBox p {
+    color: #FBD778;
+    font-size: 24px;
+    font-weight: bold;
+    top: 17.5%;
+}
+
+.myPlant .winBox .iconfont {
+    color: #FBD778;
+    position: fixed;
+    top: 19%;
+    font-size: 18px;
+    font-weight: bold;
+    right: 8%;
+}
+
+.myPlant .rewardBox {
+    width: 308px;
+    height: 403px;
+    background: #FBD778;
+    margin: 0 auto;
+    border-radius: 8px;
+    padding:20px 10px;
+    overflow: hidden;
+}
+
+.myPlant .rewardBox ul{
+    width: 100%;
+    height: 100%;
+}
+
+.myPlant .rewardBox li {
+    width: 31%;
+    height: 25%;
+    background: #FFEFB9;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    float: left;
+    position: relative;
+    border-radius: 5px;
+}
+
+.myPlant .rewardBox li .day{
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    background-color: #FFB900;
+    text-align: center;
+    display: block;
+    padding: 6px;
+    border-radius: 5px 5px 0 0;
+}
+
+.myPlant .rewardBox li .enengy{
+    color: #585858;
+    text-align: center;
+    display: block;
+    padding: 3px;
+}
+
+.myPlant .rewardBox li:nth-of-type(3n+0){
+    margin-right: 0;
+}
+
+.myPlant .rewardBox .di {
+    width: 45px;
+    height: 50px;
+    background: url("../img/water.svg") no-repeat;
+    display: block;
+    background-size: cover;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 60px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.myPlant .rewardBox li .bgBox{
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background: none;
+}
+
+.myPlant .rewardBox li .bgBox .bg{
+    width: 100%;
+    height: 100%;
+    background: #222222;
+    opacity: 0.6;
+    top: 0;
+    position: absolute;
+    border-radius: 5px;
+}
+
+.myPlant .rewardBox li .bgBox .gou {
+    position: absolute;
+    left: 20%;
+    color: #fff;
+    font-size: 1rem;
+    opacity: 1;
+}
+
+.myPlant .rewardBox li.seven{
+    width: 100%;
+}
+
+.time-horizontal {
+    list-style-type: none;
+    border-top: 5px solid #FFEFB9;
+    max-width: 285px;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.time-horizontal li {
+    float: left !important;
+    position: relative !important;
+    text-align: center;
+    width: 25% !important;
+    margin: 0 !important;
+    background: none !important;
+}
+
+.time-horizontal li b{
+    width: 71px;
+    float:  left;
+    margin-top: 20px;
+    color: #585858;
+    top:0px;
+    text-align: center;
+}
+
+.time-horizontal li b:before {
+    content: url("../img/water-small.png");
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #FFEFB9;
+    border-radius: 100px;
+    background: #FFEFB9;
+    top: -35px;
+    left: 12px;
+}
+
+    /*my*/
+.my .contanier .mint-cell-title img{
+    margin-right: 15px;
+}
+
+.my .contanier .mint-cell:first-of-type img{
+    width: 60px;
+    height: 60px;
+    padding:30px 0;
+}
+
+.mint-cell-text {
+    color:#585858;
+}
+
+/*wallet*/
+.wallet .mint-cell{
+    padding:5px 2px;
+    border-bottom:1px solid #ccc;
+}
+
+/*analysis*/
+
+.analysis #pieChart{
+    display: block;
+    margin:0 auto;
+}
+
+
+.analysis .top{
+    background: #f3f2f2;
+    margin-top:2px;
+}
+
+.analysis #lineeChart{
+    display: block;
+    margin:0 auto;
+}
+
+.analysis .boxList{
+    width: 95%;
+    border-radius: 3px;
+    background: #f3f2f2;
+    padding:5px;
+    text-align: right;
+    margin:0 auto;
+}
+
+.analysis .boxList span{
+    width: 33%;
+    display: inline-block;
+}
+
+.analysis .boxList span:first-of-type{
+   text-align: left;
+}
+
+.analysis .boxList span:nth-of-type(2){
+    text-align: left;
+}
+
+#lineChart div{
+    display: block;
+    margin-left:45% !important;
+}
+
+.none{
+    display: none;
+}
+
+.block{
+    display: block;
+}

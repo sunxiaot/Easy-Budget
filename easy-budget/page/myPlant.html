@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Easy Budget</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/viewport.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app" class="myPlant">
+        <mt-header title="Easy Budget">
+        </mt-header>
+
+        <!-- Collect energy by clicking on the water drop -->
+        <mt-popup style="width: 100%;
+                text-align: center;
+                padding: 10px 0;
+                font-size: 0.25rem;"
+                v-model="successVisible"
+                position="top">
+            Collect successfully!
+        </mt-popup>
+
+        <!-- Progress bar, used for level up -->
+        <mt-progress :value="20" :bar-height="6">
+            <div slot="start">Energy:</div>
+            <div slot="end">20%</div>
+        </mt-progress>
+ 
+        <div class="container">
+            <img @click='showDailyReward' width="50px" src="../img/reward.png">
+            <div class="top">
+                <div @click="collect" v-if="expensesName" class="waterBox expenseBox">
+                    <div class="water">
+                        <span>{{expensesNum}}</span>
+                    </div>
+                    <span>{{expensesName}}</span>
+                </div>
+                <div  @click="collectReward" v-if="isReward" class="waterBox incomeBox">
+                    <div class="water">
+                        <span>20</span>
+                    </div>
+                    <span>Daily Reward</span>
+                </div>
+            </div>
+            <div class="bottom">
+                <img src="../img/plant.png"  width="127px" alt="">
+            </div>
+        </div>
+
+
+            <!-- Tab bar -->
+            <mt-tabbar v-model="tabbar">
+                <mt-tab-item id="tab1">
+                    <a href="../index.html">
+                    <img slot="icon" src="../img/expenses.png" width="22px"><br>
+                    Expenses
+                    </a>
+                </mt-tab-item>
+                <mt-tab-item id="tab2">
+                    <a href="../page/analysis.html">
+                    <img slot="icon" src="../img/analysis.png" width="22px"><br>
+                    Analysis
+                    </a>
+                </mt-tab-item>
+                <mt-tab-item id="typein">
+                    <a href="../page/typeIn.html">
+                    <img slot="icon" src="../img/add.svg">
+                    </a>
+                </mt-tab-item>
+                <mt-tab-item id="tab3">
+                    <img slot="icon" src="../img/myplant-select.png" width="21px">
+                    My Plant
+                </mt-tab-item>
+                <mt-tab-item id="tab4">
+                    <a href="../page/my.html">
+                    <img slot="icon" src="../img/me.png" width="22px"><br>
+                    Me
+                    </a>
+                </mt-tab-item>
+            </mt-tabbar>
+
+
+        <!-- Rewards calendar-->
+        <div class="box" v-show="isShow">
+            <div class="bgBox" @click="close"></div>
+            <div class="winBox">
+                <p>Reward Calendar</p>
+                <span @click="close" class="iconfont">&#xe611;</span>
+                <div class="rewardBox">
+                        <ul>
+                            <li @click="showReward">
+                                <div class="dayBox">
+                                    <span class="day">DAY 1</span>
+                                    <span class="di">
+                                    20
+                                    </span>
+                                    <span class="enengy">20 Energy</span>
+                                </div>
+                                <div v-if="isReward" class="bgBox">
+                                    <div class="bg"></div>
+                                    <span class="iconfont gou">&#xe614;</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="dayBox">
+                                    <span class="day">DAY 2</span>
+                                    <span class="di">
+                                    20
+                                    </span>
+                                    <span class="enengy">20 Energy</span>
+                                </div>
+                                <div class="bgBox none">
+                                    <div class="bg"></div>
+                                    <span class="iconfont gou">&#xe614;</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="dayBox">
+                                    <span class="day">DAY 3</span>
+                                    <span class="di">
+                                    20
+                                    </span>
+                                    <span class="enengy">20 Energy</span>
+                                </div>
+                                <div class="bgBox none">
+                                    <div class="bg"></div>
+                                    <span class="iconfont gou">&#xe614;</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="dayBox">
+                                    <span class="day">DAY 4</span>
+                                    <span class="di">
+                                    30
+                                    </span>
+                                    <span class="enengy">30 Energy</span>
+                                </div>
+                                <div class="bgBox none">
+                                    <div class="bg"></div>
+                                    <span class="iconfont gou">&#xe614;</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="dayBox">
+                                    <span class="day">DAY 5</span>
+                                    <span class="di">
+                                    30
+                                    </span>
+                                    <span class="enengy">30 Energy</span>
+                                </div>
+                                <div class="bgBox none">
+                                    <div class="bg"></div>
+                                    <span class="iconfont gou">&#xe614;</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="dayBox">
+                                    <span class="day">DAY 6</span>
+                                    <span class="di">
+                                    30
+                                    </span>
+                                    <span class="enengy">30 Energy</span>
+                                </div>
+                                <div class="bgBox none">
+                                    <div class="bg"></div>
+                                    <span class="iconfont gou">&#xe614;</span>
+                                </div>
+                            </li>
+                            <li class="seven">
+                                <div class="dayBox">
+                                    <span class="day">DAY 6</span>
+                                    <span class="di">
+                                    60
+                                    </span>
+                                    <span class="enengy">60 Energy</span>
+                                </div>
+                                <div class="bgBox none">
+                                    <div class="bg"></div>
+                                    <span class="iconfont gou">&#xe614;</span>
+                                </div>
+                            </li>
+                            <li style="width: 100%; background: none; padding-top:10px;">
+                                <div id="weekly-rewards">
+                                    <ul class="time-horizontal">
+                                        <li><b>WEEK 1</b></li>
+                                        <li><b>WEEK 2</b></li>
+                                        <li><b>WEEK 3</b></li>
+                                        <li><b>WEEK 4</b></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+        data:{
+            successVisible:false,
+            popupVisible:true,
+            tabbar:'tab3',
+            isShow:false,
+            expensesName:'',
+            expensesNum:0,
+            incomeName:'',
+            incomeNum:0,
+            day:0,
+            programNum:0,
+            isReward:false
+        },
+        mounted(){
+            this.day = localStorage.getItem('day')?localStorage.getItem('day'):0;
+            console.log(this.day,'day')
+            this.programNum = localStorage.getItem('programNum')?localStorage.getItem('programNum'):0;
+            this.expensesName = this.getUrlParam('expensesName')?this.getUrlParam('expensesName'):'';
+            this.expensesNum = this.getUrlParam('expensesNum')?this.getUrlParam('expensesNum'):0;
+            this.incomeName = this.getUrlParam('incomeName')?this.getUrlParam('incomeName'):'';
+            this.incomeNum = this.getUrlParam('incomeNum')?this.getUrlParam('incomeNum'):0;
+            if(this.expensesName || this.expensesNum || this.incomeName ||this.incomeNum){
+                if(this.day == 1){
+                    this.isShow = true;
+                }
+                this.programNum = this.programNum+5;
+            }else{
+                this.isShow = false;
+                this.programNum = this.programNum+5;
+            }
+            localStorage.setItem("programNum",this.programNum);
+        },
+      methods: {
+        getUrlParam(key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var result = window.location.search.substr(1).match(reg);
+            return result ? decodeURIComponent(result[2]) : null;
+        },
+          handleClose(){
+              window.location.href = '../index.html';
+          },
+          showReward(){
+            this.isReward = true;
+          },
+          close(){
+              this.isShow = false;
+          },
+          collectReward(){
+              this.successVisible = true;
+              this.isReward = false;
+          },
+          collect(){
+            this.expensesName='';
+            this.incomeName='';
+            this.successVisible = true;
+          },
+          showDailyReward(){
+            this.isShow = true;
+          }
+      }
+    })
+  </script>
+
+
+</html>

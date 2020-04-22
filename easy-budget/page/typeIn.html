@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Easy Budget</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/viewport.js"></script>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div id="app" class="typeIn">
+        <mt-header title="Easy Budget">
+            <router-link to="../index.html" slot="left">
+                <mt-button @click="handleClose" icon="back"></mt-button>
+            </router-link>
+        </mt-header>
+
+        <!-- Nav bar -->
+        <div class="contanier">
+            <mt-navbar v-model="selected">
+                <mt-tab-item id="1">Expenses</mt-tab-item>
+                <mt-tab-item id="2">Income</mt-tab-item>
+            </mt-navbar>
+
+            <mt-tab-container v-model="selected">
+                <!-- Expenses -->
+                <mt-tab-container-item id="1" style="width: 100%;">
+                    <mt-cell>
+                        <mt-field class="expensesName" label="" placeholder="Choose Category" v-model="expensesName"></mt-field>
+                        <mt-field class="expensesNnum" label="" placeholder="Input number" type="number" v-model="expensesNum"></mt-field>
+                        <img slot="icon" src="../img/money.png" width="24" height="24">
+                    </mt-cell>
+                    <!-- Manage categories -->
+                    <div class="selectBox">
+                        <ul>
+                            <li style="position: relative;" v-for="(item,index) in expensesList" @click="getexpensesName(item,index)">
+                                <span></span>
+                                <i @click="deleteExpenses(index)" class="iconfont deleteC">&#xe611;</i>
+                                <p>{{item.text}}</p>
+                            </li>
+                            <li @click="addExpenses">
+                                <span><i class="iconfont">&#xe607;</i></span>
+                                <p>Add Category</p>
+                            </li>
+                            <li @click="finishExpenses">
+                                <span><i class="iconfont">&#xe614;</i></span>
+                                <p>Submit</p>
+                            </li>
+                        </ul>
+                    </div>
+                </mt-tab-container-item>
+
+                <!-- Income -->
+                <mt-tab-container-item id="2">
+                    <mt-cell>
+                        <mt-field class="expensesName" label="" placeholder="Choose Category" v-model="incomeName"></mt-field>
+                        <mt-field class="expensesNnum" label="" placeholder="Input number" type="number" v-model="incomeNum"></mt-field>
+                        <img slot="icon" src="../img/paycheck.png" width="24" height="24">
+                    </mt-cell>
+                    <!-- Manage categories -->
+                    <div class="selectBox">
+                        <ul>
+                            <li style="position: relative;"  v-for="(item,index) in incomeList"  @click="getincomeName(item,index)">
+                                <span></span>
+                                <i @click="deleteincome(index)" class="iconfont deleteC">&#xe611;</i>
+                                <p>{{item.text}}</p>
+                            </li>
+                            <li @click="addIncome">
+                                <span><i class="iconfont">&#xe607;</i></span>
+                                <p>Add Category</p>
+                            </li>
+                            <li @click="finishIncome">
+                                <span><i class="iconfont">&#xe614;</i></span>
+                                <p>Submit</p>
+                            </li>
+                        </ul>
+                    </div>
+                </mt-tab-container-item>
+            </mt-tab-container>
+        </div>
+
+        <mt-tabbar  v-model="tabbar">
+            <mt-tab-item  @click.native="choiceImg" id="tab1">
+                <img slot="icon" src="../img/scan.png">
+                Scan
+            </mt-tab-item>
+            <mt-tab-item id="tab2">
+                <img slot="icon" src="../img/typein.png">
+                Type In
+            </mt-tab-item>
+        </mt-tabbar>
+        <input class="none" ref="inputFile" @change="getFile" type="file" id="file-input" multiple  name="fileContent">
+    </div>
+
+</body>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+
+  <script>
+
+    //Input data
+    new Vue({
+      el: '#app',
+      data:{
+          num:'',
+          incomeNum:'',
+          selected:'1',
+          tabbar:'tab2',
+          expensesName:'',
+          expensesNum:0,
+          incomeName:'',
+          incomeNum:0,
+          expensesList:[
+              {
+                  date:'',
+                  text:'Meal',
+                  money:300.00,
+              },
+              {
+                  date:'',
+                  text:'Transport',
+                  money:100.00
+              },
+              {
+                  date:'',
+                  text:'Clothes',
+                  money:400.00
+              },
+              {
+                  date:'',
+                  text:'Rent',
+                  money:800.00
+              },
+              {
+                  date:'',
+                  text:'Makeup',
+                  money:300.00
+              },
+              {
+                  date:'',
+                  text:'Game',
+                  money:100.00
+              },
+          ],
+          day:1,
+          incomeList:[
+              {
+                  date:'',
+                  text:'Paycheck',
+                  money:300.00
+              },
+              {
+                  date:'',
+                  text:'Investment',
+                  money:100.00
+              },
+          ],
+          date:'',
+          newexpensesList:{},
+          newincomeList:{},
+          newList:[]
+      },
+
+        mounted(){
+            console.log(new Date(),'date')
+            let yy = new Date().getFullYear();
+            let mm = new Date().getMonth() + 1;
+            let dd = new Date().getDate();
+            this.date = yy+'-'+mm+'-'+dd;
+            this.expensesList = JSON.parse(localStorage.getItem('expensesList'))?JSON.parse(localStorage.getItem('expensesList')):this.expensesList;
+            this.incomeList = JSON.parse(localStorage.getItem('incomeList'))?JSON.parse(localStorage.getItem('incomeList')):this.incomeList;
+            this.newList = JSON.parse(localStorage.getItem('newList'))?JSON.parse(localStorage.getItem('newList')):this.newList;
+        },
+
+    // Manage cateegories
+    methods: {
+          deleteExpenses(index){
+              this.expensesList.splice(index,1);
+          },
+          deleteincome(index){
+              this.incomeList.splice(index,1);
+          },
+          handleClose(){
+              window.location.href = '../index.html';
+          },
+          choiceImg(){
+              this.$refs.inputFile.dispatchEvent(new MouseEvent('click'))
+          },
+          getFile(){
+              var money = [3000,2000,1000,500,300,70000,200,150,90,20300,650,960,22,470];
+              var index = Math.floor((Math.random()*money.length));
+              console.log(this.selected)
+              if(this.selected == '1'){
+                  this.expensesNum = money[index];
+              }else{
+                  this.incomeNum = money[index];
+              }
+              // money[index];
+          },
+          getexpensesName(item,index){
+             this.expensesName  = item.text;
+             this.num = index;
+          },
+          getincomeName(item,index){
+             this.incomeName= item.text;
+              this.incomeNum = index;
+          },
+          addExpenses(){
+              var i = 0;
+              if(this.expensesName){
+                  for(i;i<this.expensesList.length;i++){
+                      if(this.expensesList[i].text.toUpperCase()!=this.expensesName.toUpperCase()){
+                          this.expensesList.push({text:this.expensesName,money:this.expensesNum,date:this.date});
+                          break;
+                      }else{
+                          this.expensesList[i].money = Number(this.expensesList[i].money+this.expensesNum);
+                      }
+                  }
+              }
+          },
+          editExpenses(){
+                var index = this.num;
+                if(this.expensesName){
+                    this.expensesList[index].text = this.expensesName;
+                }else{
+                    alert('Please input new categgoru!')
+                }
+
+          },
+          editIncome(){
+              var index = this.incomeNum;
+              if(this.incomeName){
+                  this.incomeList[index].text = this.incomeName;
+              }else{
+                  alert('Please input new categgoru!')
+              }
+          },
+          finishExpenses(){
+              this.day = localStorage.getItem('day')?localStorage.getItem('day'):0;
+              var i = 0;
+              if(this.expensesName && this.expensesNum){
+                  for(i;i<this.expensesList.length;i++){
+                      console.log(this.expensesList[i],'this.expensesList[i].text')
+                      if(this.expensesList[i].text.toUpperCase()!=this.expensesName.toUpperCase()){
+                         // this.expensesList.push({text:this.expensesName,money:this.expensesNum,date:this.date});
+                          break;
+                      }else{
+                          this.expensesList[i].money = Number(this.expensesList[i].money+this.expensesNum);
+                      }
+                  }
+                  this.newexpensesList = {
+                      text:this.expensesName,
+                      money:this.expensesNum,
+                      date:this.date
+                  };
+              }
+              var day = Number(this.day)+1;
+              console.log(day,'dat')
+              this.newList.push(this.newexpensesList);
+              localStorage.setItem("expensesList", JSON.stringify(this.expensesList));
+              localStorage.setItem("day",day);
+              localStorage.setItem("newexpensesList",JSON.stringify(this.newexpensesList));
+              localStorage.setItem("newList",JSON.stringify(this.newList));
+              window.location = 'myPlant.html?expensesName='+this.expensesName+'&expensesNum='+this.expensesNum;
+          },
+          addIncome(){
+              var i = 0;
+              if(this.incomeName){
+                  for(i;i<this.incomeList.length;i++){
+                      if(this.incomeList[i].text.toUpperCase()!=this.incomeName.toUpperCase()){
+                          this.incomeList.push({text:this.incomeName,money:this.incomeNum,date:this.date});
+                          break;
+                      }else{
+                          this.incomeList[i].money = Number(this.incomeList[i].money+this.incomeNum);
+                      }
+                  }
+              }
+    },
+          finishIncome(){
+              this.day = localStorage.getItem('day')?localStorage.getItem('day'):0;
+              var i = 0;
+              if(this.incomeName && this.incomeNum){
+                  for(i;i<this.incomeList.length;i++){
+                      if(this.incomeList[i].text.toUpperCase()!=this.incomeName.toUpperCase()){
+                          this.incomeList.push({text:this.incomeName,money:this.incomeNum,date:this.date});
+                          break;
+                      }else{
+                          this.incomeList[i].money = Number(this.incomeList[i].money+this.incomeNum);
+                          console.log(this.incomeList[i].money )
+                      }
+                  }
+                  this.newincomeList = {
+                      text:this.incomeName,
+                      money: this.incomeNum,
+                      date: this.date
+                  };
+              }
+              this.newList.push(this.newincomeList);
+              var day = Number(this.day)+1;
+
+              // Data save
+              localStorage.setItem("incomeList", JSON.stringify(this.incomeList));
+              localStorage.setItem("day",day);
+              localStorage.setItem("newincomeList",JSON.stringify(this.newincomeList));
+              localStorage.setItem("newList",JSON.parse(this.newList));
+              window.location = 'myPlant.html?incomeName='+this.incomeName+'&incomeNum='+this.incomeNum;
+          }
+      }
+    })
+  </script>
+
+
+</html>
